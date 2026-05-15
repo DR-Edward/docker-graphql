@@ -32,10 +32,14 @@ jobs:
       run: |
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
     - name: Build Docker Image
+      env:
+        NEW_VERSION: ${{ steps.version.outputs.version }} 
       run: |
         docker build --tag dredward/docker-graphql:$NEW_VERSION .
         docker build --tag dredward/docker-graphql:latest .
     - name: Push Docker Image
+      env:
+        NEW_VERSION: ${{ steps.version.outputs.version }} 
       run: |
         docker push dredward/docker-graphql:$NEW_VERSION
         docker push dredward/docker-graphql:latest
